@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Physiquezn Scheduler <14></title>
+  <style>
+    body { background-color: #1e1e1e; color: #f0f0f0; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 2rem; }
+    .container { max-width: 900px; margin: auto; background-color: #2b2b2b; padding: 2rem; border-radius: 16px; box-shadow: 0 0 10px rgba(0,0,0,0.5); }
+    h1 { text-align: center; margin-bottom: 1rem; }
+    label { display: block; margin: 1rem 0 0.5rem; font-weight: bold; }
+    textarea { width: 100%; background-color: #1e1e1e; color: #f0f0f0; border: 1px solid #555; border-radius: 8px; padding: 1rem; font-size: 1rem; margin-bottom: 1rem; }
+    textarea#input { height: 150px; }
+    textarea#blocked { height: 60px; }
+    button { background-color: #3a3a3a; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 8px; cursor: pointer; font-size: 1rem; display: block; margin: 0 auto; }
+    button:hover { background-color: #555; }
+    #output { margin-top: 2rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    table, th, td { border: 1px solid #555; }
+    th, td { padding: 0.5rem; text-align: center; }
+    th { background-color: #3a3a3a; }
+    td.highlight { background-color: #444; font-weight: bold; }
+  
+    @media (max-width: 600px) {
+      h1 { font-size: 1.2rem; }
+      label, textarea, button { font-size: 0.95rem; }
+      .container { padding: 1rem; }
+    }
+    textarea { box-sizing: border-box; }
+    table { display: block; overflow-x: auto; min-width: 600px; }
+    </style>
+    
+</head>
+<body>
+  <div class="container">
+    <h1 style="color: #ff4d4d">Physiquezn PT Scheduler</h1>
+    <label for="input">회원별 일정 입력</label>
+    <textarea id="input" placeholder="예: 이진우 / 2번 / 월 16~18, 수 16~18"></textarea>
+
+    <label for="blocked">비워야 할 요일 및 시간대 입력 (예: 목 16, 화 14~15)</label>
+    <textarea id="blocked" placeholder="예: 목 16, 화 14~15"></textarea>
+
+    <button onclick="generateSchedule()">스케줄 조율</button>
+    <div id="output"></div>
+  </div>
+
+  
+
+
+
+
+
+<script src="main.js"></script>
+</body>
+
+
+</html>
