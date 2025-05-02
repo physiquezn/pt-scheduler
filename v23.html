@@ -1,6 +1,29 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      font-family: Arial, sans-serif;
+      background-color: #1e1e1e;
+      color: white;
+    }
+    table {
+      width: 100%;
+      table-layout: fixed;
+      word-wrap: break-word;
+    }
+    td, th {
+      text-align: center;
+      padding: 8px;
+    }
+    input, textarea {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  </style>
   <meta charset="UTF-8" />
   <title>Physiquezn Scheduler <14></title>
   <style>
@@ -121,19 +144,7 @@
       }
     }
 
-    
-  const userColors = {};
-  function getUserColor(name) {
-    if (!userColors[name]) {
-      // Simple hash-based color generator
-      const hash = [...name].reduce((acc, char) => acc + char.charCodeAt(0), 0);
-      const hue = hash % 360;
-      userColors[name] = `hsl(${hue}, 70%, 75%)`;
-    }
-    return userColors[name];
-  }
-
-function generateSchedule() {
+    function generateSchedule() {
       const inputText = document.getElementById('input').value;
       const blockedText = document.getElementById('blocked').value;
       const blockedSlots = parseBlockedTimes(blockedText);
@@ -197,7 +208,7 @@ output += '<h3>📅 시간표</h3>';
         output += `<tr><td>${hour.toString().padStart(2, "0")}:00</td>`;
         days.forEach(day => {
           const assigned = schedule[day][hour];
-          output += `<td class="${assigned ? 'highlight' : ''}" style="background-color: ${assigned ? getUserColor(assigned) : 'transparent'}">${assigned || '-'}</td>`;
+          output += `<td class="${assigned ? 'highlight' : ''}">${assigned || '-'}</td>`;
         });
         output += '</tr>';
       });
