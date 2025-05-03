@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"/>
+  <title>Physiquezn PT Scheduler v40</title>
+  <style>
+    body {
+      background-color: #1e1e1e;
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 30px;
+    }
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background-color: #2b2b2b;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    }
+    h1 {
+      text-align: center;
+      color: #ff4d4d;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    textarea {
+      width: 100%;
+      background-color: #1e1e1e;
+      color: #f0f0f0;
+      border: 1px solid #555;
+      border-radius: 8px;
+      padding: 1rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #3a3a3a;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      display: block;
+      margin: 0 auto;
+    }
+    button:hover {
+      background-color: #555;
+    }
+    #output {
+      margin-top: 2rem;
+    }
+  </style>
+  <script>
+    const days = ['월', '화', '수', '목', '금'];
+    const hours = Array.from({ length: 10 }, (_, i) => 14 + i);
+
+    function parseTimeRange(str) {
+      if (!str) return [];
+      if (str.includes('-') || str.includes('~')) {
+        const [start, end] = str.split(/-|~/).map(Number);
+        return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+      }
+      return [Number(str)];
+    }
+
+    function preprocessTimeBlocks(rawString) {
+      const tokens = rawString.split(',');
+      const result = [];
+      let currentDays = [];
+
+      tokens.forEach(token => {
+        const trimmed = token.trim();
+        const dayMatch = trimmed.match(/^[월화수목금]+$/);
+        const timeMatch = trimmed.match(/^(\d+(?:[-~]\d+)?)$/);
+        const comboMatch = trimmed.match(/^([월화수목금]+)\s*(\d+(?:[-~]\d+)?)$/);
+
+        if (comboMatch) {
+          const daysStr = comboMatch[1];
+          const time = comboMatch[2];
+          const hours = parseTimeRange(time);
+          daysStr.split('').forEach(d => {
+            hours.forEach(h => {
+              result.push(`${d} ${h}`);
+            });
+          });
+        } else if (dayMatch) {
+          currentDays = trimmed.split('');
+        } else if (timeMatch && currentDays.length > 0) {
+          const hours = parseTimeRange(trimmed);
+          currentDays.forEach(d => {
+            hours.forEach(h => {
+              result.push(`${d} ${h}`);
+            });
+          });
+          currentDays = [];
+        }
+      });
+
+      return result;
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Physiquezn PT Scheduler</h1>
+    <label for="input">회원별 일정 입력</label>
+    <textarea id="input" placeholder="예: 이진우 / 2번 / 월 16~18, 수 16~18"></textarea>
+    <label for="blocked">비워야 할 요일 및 시간대 입력 (예: 목 16, 화 14~15)</label>
+    <textarea id="blocked" placeholder="예: 목 16, 화 14~15"></textarea>
+    <button onclick="generateSchedule()">스케줄 조율</button>
+    <div id="output"></div>
+  </div>
+</body>
+</html>
