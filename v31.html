@@ -287,6 +287,19 @@ function copySummary() {
       output += '</tbody></table></div>';
 
       document.getElementById('output').innerHTML = output;
+const copyButton = document.createElement('button');
+copyButton.innerText = '배정 요약 복사하기';
+copyButton.style.marginTop = '1rem';
+copyButton.style.padding = '8px 16px';
+copyButton.style.fontSize = '1rem';
+copyButton.onclick = copySummary;
+document.getElementById('output').appendChild(copyButton);
+
+const confirmDiv = document.createElement('div');
+confirmDiv.id = 'copyConfirm';
+confirmDiv.style.color = 'lightgreen';
+confirmDiv.style.marginTop = '0.5rem';
+document.getElementById('output').appendChild(confirmDiv);
     }
 
     function saveScheduleAsImage() {
